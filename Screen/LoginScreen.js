@@ -3,9 +3,11 @@
 
 // Import React and Component
 import React, { useState, createRef } from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
+import InputValidator from "react-native-input-validator";
 import {
-  StyleSheet,
   TextInput,
+  StyleSheet,
   View,
   Text,
   ScrollView,
@@ -16,9 +18,8 @@ import {
 } from 'react-native';
 import Colors from '../constants/Color';
 import Card from '../components/Card';
-
+import PasswordInputText from 'react-native-hide-show-password-input';
 import AsyncStorage from '@react-native-community/async-storage';
-
 import Loader from './Components/Loader';
 
 const LoginScreen = ({ navigation }) => {
@@ -99,11 +100,13 @@ const LoginScreen = ({ navigation }) => {
                 <View style={styles.card}>
                   <Card style={styles.buttonConatiner}>
                     <View style={styles.SectionStyle}>
+                      <Icon style={styles.searchIcon} name="mail-outline" size={18} color="#7B8B9A" />
                       <TextInput
                         style={styles.inputStyle}
+                        type="email"
                         onChangeText={(UserEmail) => setUserEmail(UserEmail)}
                         placeholder="Enter your email address" //dummy@abc.com
-                        placeholderTextColor="#8b9cb5"
+                        placeholderTextColor="#7B8B9A"
                         autoCapitalize="none"
                         keyboardType="email-address"
                         returnKeyType="next"
@@ -115,20 +118,24 @@ const LoginScreen = ({ navigation }) => {
                       />
                     </View>
                     <View style={styles.SectionStyle}>
+                      <Icon style={styles.searchIcon} name="lock-closed-outline" size={18} color="#7B8B9A" />
                       <TextInput
                         style={styles.inputStyle}
-                        onChangeText={(UserPassword) => setUserPassword(UserPassword)}
-                        placeholder="Enter your password" //12345
-                        placeholderTextColor="#8b9cb5"
-                        keyboardType="default"
-                        ref={passwordInputRef}
-                        onSubmitEditing={Keyboard.dismiss}
-                        blurOnSubmit={false}
-                        secureTextEntry={true}
+                        onChangeText={(userPassword) => setUserPassword(userPassword)}
                         underlineColorAndroid="#f000"
+                        placeholder="Enter your password"
+                        placeholderTextColor="#7B8B9A"
+                        autoCapitalize="sentences"
+                        secureTextEntry={true}
                         returnKeyType="next"
+                        blurOnSubmit={false}
                       />
                     </View>
+                    <Text
+                      style={styles.TextStyle}
+                      onPress={() => navigation.navigate('RecoverPasswordScreen')}>
+                      Forgot Password?
+                   </Text>
                     {errortext != '' ? (
                       <Text style={styles.errorTextStyle}> {errortext} </Text>
                     ) : null}
@@ -136,14 +143,17 @@ const LoginScreen = ({ navigation }) => {
                       style={styles.buttonStyle}
                       activeOpacity={0.5}
                       onPress={handleSubmitPress}>
-                      <Text style={styles.buttonTextStyle}>Login</Text>
+                      <View>
+                        <Icon style={styles.arrowIcon} name="arrow-forward-outline" size={80} color="#fff" />
+                        <Text style={styles.buttonTextStyle}></Text>
+                      </View>
                     </TouchableOpacity>
                   </Card>
                   <Text
                     style={styles.registerTextStyle}
                     onPress={() => navigation.navigate('RegisterScreen')}>
-                    Don't have an account? Sign Up Now!
-            </Text>
+                    Don't have an account?<Text style={styles.spanStyle}> Sign Up Now! </Text>
+                  </Text>
                 </View>
               </View>
             </View>
@@ -175,11 +185,15 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   SectionStyle: {
-    flexDirection: 'column',
-    height: 40,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 45,
     marginTop: 20,
     marginLeft: 5,
     marginRight: 5,
+    borderBottomColor: '#dadae8',
+    borderBottomWidth: 1,
   },
   buttonStyle: {
     backgroundColor: Colors.primaryColor,
@@ -189,11 +203,17 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     borderRadius: 50,
-    marginLeft: 50,
+    marginLeft: 65,
     marginRight: 50,
-    marginTop: 20,
-    zIndex:999,
-    marginBottom: -50,
+    marginTop: 50,
+    zIndex: 999,
+    marginBottom: -10,
+    width: 80,
+    height: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 100
   },
   buttonTextStyle: {
     color: '#fff',
@@ -202,21 +222,35 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     flex: 1,
-    color: 'white',
+    color: '#dadae8',
     paddingLeft: 15,
     paddingRight: 15,
-    borderWidth: 1,
-    borderRadius: 30,
-    borderColor: '#dadae8',
+    borderBottomColor: '#dadae8',
+    borderBottomWidth: 0,
   },
   registerTextStyle: {
-    color: '#c8c8c8',
+    color: '#7B8B9A',
     textAlign: 'center',
-    fontWeight: 'bold',
     fontSize: 14,
     alignSelf: 'center',
-    padding: 10,
-    marginLeft:-20
+    padding: 30,
+    marginLeft: -28
+  },
+  TextStyle: {
+    color: '#7B8B9A',
+    textAlign: 'center',
+    fontSize: 14,
+    paddingTop: 20,
+    textDecorationLine: 'underline',
+    marginLeft: 80
+  },
+  spanStyle: {
+    color: Colors.primaryColor,
+    textAlign: 'center',
+    fontSize: 14,
+    paddingTop: 12,
+    textDecorationLine: 'underline',
+    marginLeft: 80
   },
   errorTextStyle: {
     color: 'red',
@@ -238,26 +272,26 @@ const styles = StyleSheet.create({
   headerTitle: {
     color: 'white',  //white
     fontSize: 30,
-    alignItems: 'center',
-    justifyContent: 'center'
+    textAlign: 'left',
+    marginTop: 18
 
   },
   buttonConatiner: {
-    marginBottom:20,
-    marginTop: 60,
+    marginBottom: 20,
+    marginTop: 80,
     width: 800,
     maxWidth: '90%',
-    height: 230,
+    height: 280,
     paddingTop: 20
   },
   card: {
     paddingLeft: 40,
     paddingRight: 20,
   },
-  button: {
-    marginBottom: '2rem',
-    color: '#fff',
-    backgroundColor: '#111'
+  arrowIcon: {
+    paddingTop: 45,
+    marginLeft: -12,
+    zIndex: 999
   }
 
 });
