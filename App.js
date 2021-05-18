@@ -28,26 +28,38 @@ const Auth = () => {
   // Stack Navigator for Login and Sign up Screen
   return (
     <Stack.Navigator initialRouteName="TrademarkScreen">
-
-      <Stack.Screen
-        name="CopyRightScreen"
-        component={CopyRightScreen}
+      
+      {/*   <Stack.Screen
+        name="ResetPasswordScreen"
+        component={ResetPasswordScreen}
+        options={{
+          headerShown: false
+        }}
+      />
+       <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
         options={{ headerShown: false }}
       />
 
-
-      {/*<Stack.Screen
+      <Stack.Screen
         name="PatentScreen"
         component={PatentScreen}
         options={{ headerShown: false }}
       />
+          <Stack.Screen
+        name="CopyRightScreen"
+        component={CopyRightScreen}
+        options={{ headerShown: false }}
+      />
       
-      <Stack.Screen
+           <Stack.Screen
         name="TrademarkScreen"
         component={TrademarkScreen}
         options={{ headerShown: false }}
       />
-      
+
+     
       <Stack.Screen
         name="DesignScreen"
         component={DesignScreen}
@@ -55,41 +67,14 @@ const Auth = () => {
       />
 
       <Stack.Screen
-        name="CopyRightScreen"
-        component={CopyRightScreen}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
-        name="ResetPasswordScreen"
-        component={ResetPasswordScreen}
-        options={{
-          headerShown: false
-        }}
-      />
-      
-      <Stack.Screen
         name="RegisterScreen"
         component={RegisterScreen}
         options={{
           headerShown: false
         }}
       />
-      
-      <Stack.Screen
-        name="ForgetPasswordScreen"
-        component={ForgetPasswordScreen}
-        options={{
-          headerShown: false
-        }}
-      />
-      
-      <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={{ headerShown: false }}
-      />
-      
+
+     */}
       <Stack.Screen
         name="OTPScreen"
         component={OTPScreen}
@@ -97,7 +82,6 @@ const Auth = () => {
           headerShown: false
         }}
       />
-      */}
     </Stack.Navigator>
   );
 };
